@@ -8,19 +8,20 @@ import (
 
 func main() {
 	if len(os.Args) < 3{
-		fmt.Println("Use: convert <values> <unit>")
+		fmt.Println("Use: convert <originUnit> <destionationUnit> <values>")
 		os.Exit(1)
 	}
-	var destinationUnit string
-	originUnit := os.Args[len(os.Args)-1]
-	originValues := os.Args[1 : len(os.Args)-1]
 
-	if originUnit == "celsios"{
-		destinationUnit = "fahrenheit"
-	}else if originUnit == "quilometers"{
-		destinationUnit = "miles"
-	} else {
+	originUnit := os.Args[1]
+	destinationUnit := os.Args[2]
+	originValues := os.Args[3 : len(os.Args)]
+
+	if originUnit != "celsius" && originUnit != "fahrenheit" && originUnit != "quilometers" && originUnit != "miles"{
 		fmt.Printf("%s is invalid!", originUnit)
+		os.Exit(1)
+	}
+	if destinationUnit != "celsius" && destinationUnit != "fahrenheit" && destinationUnit != "quilometers" && destinationUnit != "miles"{
+		fmt.Printf("%s is invalid!", destinationUnit)
 		os.Exit(1)
 	}
 	
@@ -33,10 +34,17 @@ func main() {
 		}
 
 		var destinationValue float64
-		if originUnit == "celsios"{
+		if originUnit == "celsius" && destinationUnit == "fahrenheit"{
 			destinationValue = originValue * 1.8 + 32
-		}else {
+		} else if originUnit == "fahrenheit" && destinationUnit == "celsius"{
+			destinationValue = (originValue - 32) / 1.8
+		}else if originUnit == "quilometers" && destinationUnit == "miles"{
 			destinationValue = originValue / 1.60934
+		} else if originUnit == "miles" && destinationUnit == "quilometers"{
+			destinationValue = originValue * 1.60934
+		} else {
+			fmt.Printf("Does not possible convert %s to %s\n", originUnit, destinationUnit)
+			os.Exit(1)
 		}
 
 		fmt.Printf("%.2f %s = %.2f %s\n", originValue, originUnit, destinationValue, destinationUnit)
