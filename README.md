@@ -1,3 +1,5 @@
+Configuge VSCode to use Go: https://code.visualstudio.com/docs/languages/go
+
 Go commands:
 - go env: Exibe as variáveis de ambiente;
   - go env -w para alterar o valor da variável de ambiente 
