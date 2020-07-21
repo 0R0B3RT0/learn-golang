@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "errors"
+	"errors"
 	"fmt"
 )
 
@@ -18,13 +18,22 @@ func main() {
 
 	stack.PrintInformations()
 
-	stack.UnStack()
-	stack.UnStack()
-	stack.UnStack()
-	stack.UnStack()
-	stack.UnStack()
+	printRemovedValue(stack.UnStack())
+	printRemovedValue(stack.UnStack())
+	printRemovedValue(stack.UnStack())
+	printRemovedValue(stack.UnStack())
+	printRemovedValue(stack.UnStack())
+	printRemovedValue(stack.UnStack())
 
 	stack.PrintInformations()
+}
+
+func printRemovedValue(value interface{}, err error) {
+	if err == nil {
+		fmt.Println("Removed value: ", value)
+	} else {
+		fmt.Println("Occur error: ", err)
+	}
 }
 
 type Stack struct {
@@ -33,6 +42,10 @@ type Stack struct {
 
 func (stack Stack) Tamanho() int {
 	return len(stack.values)
+}
+
+func (stack Stack) Empty() bool {
+	return stack.Tamanho() == 0
 }
 
 func (stack Stack) PrintInformations() {
@@ -47,9 +60,12 @@ func (stack *Stack) StackUp(value interface{}) {
 	stack.values = append(stack.values, value)
 }
 
-func (stack *Stack) UnStack() {
+func (stack *Stack) UnStack() (interface{}, error) {
+	if stack.Empty() {
+		return nil, errors.New("Empty stack!")
+	}
 	value := stack.values[len(stack.values)-1]
 	stack.values = stack.values[:len(stack.values)-1]
 
-	fmt.Println("Removed value: ", value)
+	return value, nil
 }
