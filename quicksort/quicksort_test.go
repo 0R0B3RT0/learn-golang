@@ -1,7 +1,7 @@
 package main
 
 import (
-	"reflect"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -13,12 +13,7 @@ func TestQuicksort(t *testing.T) {
 
 	for _, test := range tests {
 		actual := quicksort(test.input)
-		if !reflect.DeepEqual(actual, test.output) {
-			t.Error(
-				"For input: ", test.input,
-				"expected:", test.output,
-				"got:", actual)
-		}
+		assert.Equal(t, actual, test.output, "they should be equal")
 	}
 
 }
