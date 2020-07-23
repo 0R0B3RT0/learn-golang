@@ -1,3 +1,6 @@
+# Learn Go
+[![GoLang](https://img.shields.io/badge/Go-1.14.4-blue)](https://golang.org)
+
 Configuge VSCode to use Go: https://code.visualstudio.com/docs/languages/go
 
 Go commands:
