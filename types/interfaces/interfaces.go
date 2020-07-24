@@ -33,7 +33,7 @@ func (s Sum) Calculate() float64 {
 }
 
 func (s Sum) String() string {
-	return fmt.Sprintf("%s + %s", numberToString(s.value1), numberToString(s.value2))
+	return fmt.Sprintf("%.2f + %s", s.value1, numberToString(s.value2))
 }
 
 func numberToString(value float64) string {
@@ -50,7 +50,7 @@ func (s Subtract) Calculate() float64 {
 }
 
 func (s Subtract) String() string {
-	return fmt.Sprintf("%.2f - %.2f", s.value1, s.value2)
+	return fmt.Sprintf("%.2f - %s", s.value1, numberToString(s.value2))
 }
 
 type Divide OperationValue
@@ -60,7 +60,7 @@ func (d Divide) Calculate() float64 {
 }
 
 func (d Divide) String() string {
-	return fmt.Sprintf("%.2f / %.2f", d.value1, d.value2)
+	return fmt.Sprintf("%.2f / %s", d.value1, numberToString(d.value2))
 }
 
 type Multiply OperationValue
@@ -70,5 +70,5 @@ func (m Multiply) Calculate() float64 {
 }
 
 func (m Multiply) String() string {
-	return fmt.Sprintf("%.2f x %.2f", m.value1, m.value2)
+	return fmt.Sprintf("%.2f x %s", m.value1, numberToString(m.value2))
 }
