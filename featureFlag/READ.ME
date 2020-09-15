@@ -1,0 +1,17 @@
+Create database feature-flag
+
+```bash
+createdb feature-flag
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+create table feature(
+  id uuid primary key DEFAULT uuid_generate_v1mc(),
+  value boolean,
+  external_id uuid,
+  feature_name varchar(200)
+);
+
+--insert to test
+insert into feature(external_id, feature_name, value) values ('A35909D9-D20E-4DAD-950B-8269184D8F35', 'funcionalidade um', true);
+```
