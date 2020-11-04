@@ -14,4 +14,8 @@ create table feature(
 
 --insert to test
 insert into feature(external_id, feature_name, value) values ('A35909D9-D20E-4DAD-950B-8269184D8F35', 'funcionalidade um', true);
+insert into feature(external_id, feature_name, value) values ('A35909D9-D20E-4DAD-950B-8269184D8F35', 'funcionalidade_dois', true);
 ```
+
+Example request:
+localhost:8080/feature-flag/a35909d9-d20e-4dad-950b-8269184d8f35?feature=funcionalidade_dois

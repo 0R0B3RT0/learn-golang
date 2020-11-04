@@ -2,8 +2,12 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	_ "github.com/lib/pq"
+	"log"
+	"net/http"
+	"net/url"
 )
 
 const (
@@ -22,15 +26,40 @@ type feature struct {
 }
 
 func main() {
+	http.HandleFunc("/", apiResponse)
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
 
-	myFeat, err := findFeature("a35909d9-d20e-4dad-950b-8269184d8f35", "funcionalidade um")
-	if err != nil {
-		fmt.Println("Failed to execute query: ", err)
+func apiResponse(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+
+	query, _ := url.ParseQuery(r.URL.RawQuery)
+
+	log.Println(query["feature"][0])
+	path := r.URL.RequestURI()
+	log.Println("before parse: ", path)
+	parsedPath, _ := url.ParseRequestURI(path)
+	log.Println(" after parse: ", parsedPath)
+
+	switch r.Method {
+	case "GET":
+		featureName := query["feature"][0]
+		myFeat, err := findFeature("a35909d9-d20e-4dad-950b-8269184d8f35", featureName)
+		if err != nil {
+			log.Println("Failed to execute query: ", err)
+		}
+		log.Println(myFeat)
+
+		myFeatJSON, err := json.Marshal(myFeat)
+		if err != nil {
+			log.Println("Failed to json marshal: ", err)
+		}
+		w.Write([]byte(myFeatJSON))
+	default:
+		w.Write([]byte("Method not supported"))
 	}
 
-	fmt.Println(myFeat)
-
-	fmt.Println("Successfully connected!")
 }
 
 func findFeature(externalID, featureName string) (feature, error) {
