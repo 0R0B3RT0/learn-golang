@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2> Página Principal</h2>
+
+    <h4>Seja bem vindo! {{.Nome}}</h4>
+    <h4>O e-mail {{.Email}} foi cadastrado com sucesso</h4>
+
+    <button id='botao'>Clique aqui</button>
+    <script>
+        let botao = document.getElementById('botao')
+        botao.onclick = function () {
+            alert('O botão foi clicado')
+        }
+    </script>
+</body>
+
+</html>

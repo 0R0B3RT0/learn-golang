@@ -1,0 +1,16 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5
+    tmpfs:
+      - /var/lib/mysql:rw
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=mysql
+      - MYSQL_DATABASE=html
+    ports:
+      - "3306:3306"
+    volumes:
+      - .docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    #   - ./database/data:/var/lib/mysql/data
