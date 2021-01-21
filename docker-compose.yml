@@ -6,9 +6,9 @@ services:
       - /var/lib/mysql:rw
     environment:
       - MYSQL_ROOT_PASSWORD=mysql
-      - MYSQL_USER=mysql
-      - MYSQL_PASSWORD=mysql
-      - MYSQL_DATABASE=html
+      - MYSQL_USER=golang
+      - MYSQL_PASSWORD=golang
+      - MYSQL_DATABASE=devbook
     ports:
       - "3306:3306"
     volumes:
