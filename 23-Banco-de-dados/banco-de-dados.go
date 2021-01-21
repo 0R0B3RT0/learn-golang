@@ -23,4 +23,12 @@ func main() {
 	defer db.Close()
 
 	fmt.Println("Conexão aberta!")
+
+	linhas, error := db.Query("select * from usuarios")
+	if error != nil {
+		log.Fatal(error)
+	}
+	defer linhas.Close()
+
+	fmt.Println(linhas)
 }

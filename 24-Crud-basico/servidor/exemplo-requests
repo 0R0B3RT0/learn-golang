@@ -1,0 +1,1 @@
+curl -X POST localhost:5000/usuarios --header "Content-Type: application/json" --data '{"id":123,"nome":"Fulano","email":"fulano@gmail.com"}'
