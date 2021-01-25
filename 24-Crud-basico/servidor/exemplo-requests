@@ -1,6 +1,0 @@
-insere um usuário
-                                curl -X POST localhost:5000/usuarios --header "Content-Type: application/json" --data '{"id":123,"nome":"Fulano","email":"fulano@gmail.com"}'
-
-consulta todos os usuários
-curl -X GET localhost:5000/usuarios --header "Content-Type: application/json"                                                                
-

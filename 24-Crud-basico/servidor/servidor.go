@@ -196,3 +196,38 @@ func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusNoContent)
 }
+
+func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
+	parametros := mux.Vars(r)
+
+	ID, error := strconv.ParseUint(parametros["id"], 10, 32)
+	if error != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao converter o parâmetro para inteiro"))
+		return
+	}
+
+	db, error := banco.Conect()
+	if error != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Erro ao conectar no banco"))
+		return
+	}
+	defer db.Close()
+
+	statement, error := db.Prepare("delete from usuarios where id=?")
+	if error != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Erro ao preparar o statement"))
+		return
+	}
+	defer statement.Close()
+
+	if _, error := statement.Exec(ID); error != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Erro ao deletar o usuário"))
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
