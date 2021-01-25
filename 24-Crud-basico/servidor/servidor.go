@@ -59,4 +59,37 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(fmt.Sprintf("Usuário inserido com sucesso!!! Id inserido %d\n", idInserido)))
 }
 
-// 	fmt.Println(db)
+func BuscarUsuarios(w http.ResponseWriter, r *http.Request) {
+	db, error := banco.Conect()
+	if error != nil {
+		w.Write([]byte("Erro ao conectar no banco de dados"))
+	}
+	defer db.Close()
+
+	lines, error := db.Query("select * from usuarios")
+	if error != nil {
+		w.Write([]byte("Erro ao buscar usuarios"))
+	}
+	defer lines.Close()
+
+	var usuarios []usuario
+
+	for lines.Next() {
+		var usuario usuario
+		if error := lines.Scan(&usuario.ID, &usuario.Nome, &usuario.Email); error != nil {
+			w.Write([]byte("Erro ao ler informações do banco de dados"))
+		}
+
+		usuarios = append(usuarios, usuario)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	if error := json.NewEncoder(w).Encode(usuarios); error != nil {
+		w.Write([]byte("Erro ao converter os usuários"))
+		return
+	}
+}
+
+func BuscarUsuario(w http.ResponseWriter, r *http.Request) {
+
+}
